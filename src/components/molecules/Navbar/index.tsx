@@ -1,5 +1,5 @@
-import { NavLink } from "react-router";
 import "./index.css";
+import { NavLink } from "react-router";
 import HomeIcon from "../../atoms/HomeIcon";
 
 const Navbar = () => {

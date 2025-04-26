@@ -8,3 +8,10 @@ export type MappedForm = {
   id: string;
   properties: FormProperty[];
 };
+
+export type MappedNodeForm = {
+  nodeId: string;
+  nodeName: string;
+  prerequisites?: string[];
+  formProperties: FormProperty[];
+};
