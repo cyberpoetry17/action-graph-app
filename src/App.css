@@ -4,7 +4,6 @@
   height: 100%;
   grid-template-columns: auto 1fr;
   grid-template-rows: auto 1fr;
-  gap: 10px;
 }
 
 .grid-item-navbar {

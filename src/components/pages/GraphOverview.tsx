@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   BASE_API,
   BLUEPRINT_ID,
@@ -7,11 +7,12 @@ import {
   TENANT_ID,
 } from "../../constants";
 import { ActionGraph } from "../../types/graph";
-import ChartForm from "../molecules/Chart/Form";
+import ChartForm from "../molecules/Form";
 import Chart from "../molecules/Chart";
-import { MappedForm } from "../../types/form";
+import { MappedNodeForm } from "../../types/form";
 
 const GraphOverview = () => {
+  //API
   const [actionGraph, setActionGraph] = useState<ActionGraph>();
 
   const fetchGraph = async () => {
@@ -30,6 +31,7 @@ const GraphOverview = () => {
     fetchGraph();
   }, []);
 
+  //MAPPED NODES, EDGES
   const mappedNodes = useMemo(() => {
     return (
       actionGraph?.nodes?.map((node) => ({
@@ -51,29 +53,93 @@ const GraphOverview = () => {
     );
   }, [actionGraph?.edges]);
 
-  const mappedForms: MappedForm[] | undefined = actionGraph?.forms?.map(
-    ({ name, id, field_schema }) => ({
-      name,
-      id,
-      properties: Object.keys(field_schema.properties).map((key) => ({
-        name: key,
-        prefillValue: undefined,
-      })),
-    })
+  const mappedData: MappedNodeForm[] | undefined = useMemo(() => {
+    const nodes = actionGraph?.nodes;
+    const forms = actionGraph?.forms;
+
+    return nodes?.map(({ id, data }) => {
+      const form = forms?.find((form) => form.id === data.component_id);
+      const properties = form?.field_schema?.properties;
+
+      return {
+        nodeId: id,
+        nodeName: data.name,
+        prerequisites: data.prerequisites,
+        formProperties: properties
+          ? Object.keys(properties).map((key) => ({
+              name: key,
+              prefillValue:
+                "Form: Adwdwjkdw dwijdiwjd jdwkdjw djwidjwi fefef fefefef fefefef fefe",
+            }))
+          : [],
+      };
+    });
+  }, [actionGraph?.forms, actionGraph?.nodes]);
+
+  //ENRICHED FORMS:
+
+  const [enrichedForms, setEnrichedForms] = useState<MappedNodeForm[]>();
+  const [selectedFormId, setSelectedFormId] = useState<string>();
+
+  useEffect(() => {
+    setEnrichedForms(mappedData);
+  }, [mappedData]);
+
+  const selectedForm = useMemo(() => {
+    return enrichedForms?.find((form) => form.nodeId === selectedFormId);
+  }, [enrichedForms, selectedFormId]);
+
+  const handleNodeClick = useCallback(
+    (id: string) =>
+      setSelectedFormId(
+        enrichedForms?.find((form) => form.nodeId === id)?.nodeId
+      ),
+    [enrichedForms]
   );
 
-  const [selectedForm, setSelectedForm] = useState<MappedForm>();
+  const handleClearPrefillValue = useCallback(
+    (name: string) => {
+      const updatedEnrichedForm = enrichedForms?.find(
+        (enrichedForm) => enrichedForm.nodeId === selectedFormId
+      );
 
-  const handleNodeClick = (id: string) => {
-    const node = actionGraph?.nodes?.find((node) => node.id === id);
-    setSelectedForm(
-      mappedForms?.find((form) => form.id === node?.data.component_id)
-    );
-  };
+      if (updatedEnrichedForm) {
+        const updatedFormProperties = updatedEnrichedForm.formProperties.map(
+          (property) => {
+            if (property.name === name)
+              return { ...property, prefillValue: "" };
 
+            return property;
+          }
+        );
+
+        setEnrichedForms((prev) =>
+          prev?.map((form) =>
+            form.nodeId === selectedFormId
+              ? {
+                  ...updatedEnrichedForm,
+                  formProperties: updatedFormProperties,
+                }
+              : form
+          )
+        );
+      }
+    },
+    [enrichedForms, selectedFormId]
+  );
+
+  const handleOpenModal = () => console.log("clicked");
+
+  //COMPONENTS
   return (
     <>
-      {selectedForm && <ChartForm form={selectedForm} />}
+      {selectedForm && (
+        <ChartForm
+          form={selectedForm}
+          handleClick={handleOpenModal}
+          handleClearPrefillValue={handleClearPrefillValue}
+        />
+      )}
       {mappedNodes && mappedEdges && (
         <Chart
           nodes={mappedNodes}
@@ -82,7 +148,7 @@ const GraphOverview = () => {
           minZoom={MIN_ZOOM}
           background={{ id: "active-graph-chart" }}
           handleNodeClick={handleNodeClick}
-        />
+        ></Chart>
       )}
     </>
   );

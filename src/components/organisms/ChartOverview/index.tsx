@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Form } from "../../../types/graph";
-import ChartForm from "../../molecules/Chart/Form";
+import ChartForm from "../../molecules/Form";
 import Chart from "../../molecules/Chart";
 import type { Node, Edge } from "@xyflow/react";
 import { MAX_ZOOM, MIN_ZOOM } from "../../../constants";

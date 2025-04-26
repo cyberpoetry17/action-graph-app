@@ -1,6 +1,6 @@
-import "@xyflow/react/dist/style.css";
 import { ReactFlow } from "@xyflow/react";
 import type { Node, Edge, NodeMouseHandler } from "@xyflow/react";
+import "@xyflow/react/dist/style.css";
 import Background, { BackgroundProps } from "./Background";
 
 type ChartProps = {
@@ -10,6 +10,7 @@ type ChartProps = {
   maxZoom?: number;
   fitView?: boolean;
   background?: BackgroundProps;
+  children?: React.ReactNode;
   handleNodeClick: (node: string) => void;
 };
 
@@ -21,6 +22,7 @@ const Chart = ({
   fitView,
   background,
   handleNodeClick,
+  children,
 }: ChartProps) => {
   const onNodeClick: NodeMouseHandler<Node> = (_, node) =>
     handleNodeClick(node.id);
@@ -34,6 +36,7 @@ const Chart = ({
       fitView={fitView}
       onNodeClick={onNodeClick}
     >
+      {children}
       {background && (
         <Background
           variant={background.variant}
