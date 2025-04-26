@@ -1,0 +1,22 @@
+.navbar {
+  height: 100%;
+  width: fit-conent;
+  background-color: white;
+  padding: 0.5rem;
+}
+
+.navbar-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.navbar-link {
+  color: rgb(131, 129, 129);
+  text-decoration: none;
+}
+
+.active-link,
+.navbar-link:hover {
+  color: rgb(26, 26, 26);
+  text-decoration: none;
+}

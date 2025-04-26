@@ -1,4 +1,4 @@
-type Edge = {
+export type Edge = {
   source: string;
   target: string;
 };
@@ -21,7 +21,7 @@ type NodeData = {
   approval_roles?: string[];
 };
 
-type Node = {
+export type Node = {
   data: NodeData;
   id: string;
   position: Position;
@@ -32,13 +32,13 @@ type DynamicFieldConfig = {
   output_id?: string;
 };
 
-type FieldSchema = {
+export type FieldSchema = {
   type: string;
-  properties: Record<string, unknown>[];
+  properties: Record<string, unknown>;
   required?: string[];
 };
 
-type Form = {
+export type Form = {
   id: string;
   description: string;
   is_reusable: boolean;
