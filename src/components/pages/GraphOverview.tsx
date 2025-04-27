@@ -10,6 +10,8 @@ import { ActionGraph } from "../../types/graph";
 import ChartForm from "../molecules/Form";
 import Chart from "../molecules/Chart";
 import { MappedNodeForm } from "../../types/form";
+import Modal from "../molecules/Modal";
+import { EnrichedFormsUpdateProps, getUpdatedEnrichedForms } from "../../utils";
 
 const GraphOverview = () => {
   //API
@@ -97,42 +99,45 @@ const GraphOverview = () => {
     [enrichedForms]
   );
 
+  const updateEnrichedForms = (args: EnrichedFormsUpdateProps) => {
+    setEnrichedForms((prev) =>
+      getUpdatedEnrichedForms({ ...args, enrichedForms: prev })
+    );
+  };
+
   const handleClearPrefillValue = useCallback(
     (name: string) => {
-      const updatedEnrichedForm = enrichedForms?.find(
-        (enrichedForm) => enrichedForm.nodeId === selectedFormId
-      );
-
-      if (updatedEnrichedForm) {
-        const updatedFormProperties = updatedEnrichedForm.formProperties.map(
-          (property) => {
-            if (property.name === name)
-              return { ...property, prefillValue: "" };
-
-            return property;
-          }
-        );
-
-        setEnrichedForms((prev) =>
-          prev?.map((form) =>
-            form.nodeId === selectedFormId
-              ? {
-                  ...updatedEnrichedForm,
-                  formProperties: updatedFormProperties,
-                }
-              : form
-          )
-        );
-      }
+      updateEnrichedForms({
+        name: name,
+        id: selectedFormId!,
+        enrichedForms: enrichedForms,
+      });
     },
     [enrichedForms, selectedFormId]
   );
 
-  const handleOpenModal = () => console.log("clicked");
+  // const handleUpdatePrefillValue = useCallback(
+  //   (name: string, prefillValue: string) => {
+  //     updateEnrichedForms({
+  //       name: name,
+  //       id: selectedFormId!,
+  //       enrichedForms: enrichedForms,
+  //       prefillValue: prefillValue,
+  //     });
+  //   },
+  //   [enrichedForms, selectedFormId]
+  // );
 
+  //MODAL
+  const [isOpen, setIsOpen] = useState(false);
+  const handleCloseModal = () => setIsOpen(false);
+  const handleOpenModal = () => setIsOpen(true);
+
+  // const sections: MappingSection[] = [{ type:"parent", name: }];
   //COMPONENTS
   return (
     <>
+      <Modal isOpen={isOpen} handleClose={handleCloseModal} />
       {selectedForm && (
         <ChartForm
           form={selectedForm}
