@@ -14,7 +14,17 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
-  height: 400px;
-  width: fit-content;
+  height: 500px;
+  width: 500px;
   background-color: white;
+  /* padding: 20px; */
+  display: flex;
+  flex-direction: column;
+  border-radius: 2px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: end;
+  overflow: visible;
 }

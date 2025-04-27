@@ -9,9 +9,15 @@ import {
 import { ActionGraph } from "../../types/graph";
 import ChartForm from "../molecules/Form";
 import Chart from "../molecules/Chart";
-import { MappedNodeForm } from "../../types/form";
+import { MappedNodeForm, Prefill } from "../../types/form";
 import Modal from "../molecules/Modal";
-import { EnrichedFormsUpdateProps, getUpdatedEnrichedForms } from "../../utils";
+import {
+  createSections,
+  EnrichedFormsUpdateProps,
+  getParents,
+  getUpdatedEnrichedForms,
+} from "../../utils";
+import { MappingSection, MappingSectionVariant } from "../../types/modal";
 
 const GraphOverview = () => {
   //API
@@ -70,8 +76,10 @@ const GraphOverview = () => {
         formProperties: properties
           ? Object.keys(properties).map((key) => ({
               name: key,
-              prefillValue:
-                "Form: Adwdwjkdw dwijdiwjd jdwkdjw djwidjwi fefef fefefef fefefef fefe",
+              prefill: {
+                prefillValue:
+                  "Form: Adwdwjkdw dwijdiwjd jdwkdjw djwidjwi fefef fefefef fefefef fefe",
+              },
             }))
           : [],
       };
@@ -116,28 +124,43 @@ const GraphOverview = () => {
     [enrichedForms, selectedFormId]
   );
 
-  // const handleUpdatePrefillValue = useCallback(
-  //   (name: string, prefillValue: string) => {
-  //     updateEnrichedForms({
-  //       name: name,
-  //       id: selectedFormId!,
-  //       enrichedForms: enrichedForms,
-  //       prefillValue: prefillValue,
-  //     });
-  //   },
-  //   [enrichedForms, selectedFormId]
-  // );
+  const handleUpdatePrefillValue = useCallback(
+    (name: string, prefill: Prefill) => {
+      updateEnrichedForms({
+        name,
+        id: selectedFormId!,
+        enrichedForms: enrichedForms,
+        prefill: prefill,
+      });
+    },
+    [enrichedForms, selectedFormId]
+  );
 
   //MODAL
-  const [isOpen, setIsOpen] = useState(false);
-  const handleCloseModal = () => setIsOpen(false);
-  const handleOpenModal = () => setIsOpen(true);
 
-  // const sections: MappingSection[] = [{ type:"parent", name: }];
+  const [sections, setSections] = useState<MappingSection[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleCloseModal = () => setIsOpen(false);
+  const handleOpenModal = (name: string) => {
+    const parents = getParents(selectedForm?.prerequisites, enrichedForms);
+    const newSections = [
+      ...createSections(parents, MappingSectionVariant.Parent),
+    ];
+    console.log(newSections);
+    setSections(newSections);
+    setIsOpen(true);
+  };
+
   //COMPONENTS
   return (
     <>
-      <Modal isOpen={isOpen} handleClose={handleCloseModal} />
+      <Modal
+        isOpen={isOpen}
+        handleClose={handleCloseModal}
+        sections={sections}
+        handlePrefill={handleUpdatePrefillValue}
+      />
       {selectedForm && (
         <ChartForm
           form={selectedForm}

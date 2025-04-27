@@ -1,0 +1,16 @@
+.modal-menu-section {
+  list-style-type: none;
+  padding-left: 8px;
+}
+
+.modal-menu-section-button {
+  text-align: left;
+  padding: 4px;
+  border: 0;
+  background-color: #f6f6f6;
+}
+
+.modal-menu-section-button:hover,
+.modal-menu-section-element:hover {
+  background-color: #dce6f0;
+}

@@ -12,7 +12,6 @@ const App = () => {
       <div className="grid-item-chart">
         <Routes>
           <Route path="/" element={<GraphOverview />} />
-          <Route path="/1" element={<></>} />
         </Routes>
       </div>
     </div>

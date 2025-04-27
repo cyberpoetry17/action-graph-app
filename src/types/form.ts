@@ -1,6 +1,12 @@
+export type Prefill = {
+  prefillValue?: string;
+  prefillSourceId?: string;
+  prefillSourceName?: string;
+};
+
 export type FormProperty = {
   name: string;
-  prefillValue?: string;
+  prefill: Prefill;
 };
 
 export type MappedForm = {
