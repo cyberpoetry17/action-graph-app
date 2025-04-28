@@ -96,9 +96,9 @@ const FormOverview = () => {
     <>
       <Modal
         isOpen={isOpen}
-        handleClose={handleCloseModal}
+        onClose={handleCloseModal}
         sections={sections}
-        handlePrefill={handleUpdatePrefillValue}
+        onSelectPrefill={handleUpdatePrefillValue}
       />
       {selectedForm && (
         <ChartForm
