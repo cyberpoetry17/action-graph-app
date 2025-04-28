@@ -54,6 +54,32 @@ export const getParents = (
     .filter((parent): parent is EnrichedForm => Boolean(parent));
 };
 
+export const getAncestors = (
+  prerequisites?: string[],
+  enrichedForms?: EnrichedForm[],
+  ancestors?: Set<EnrichedForm>
+) => {
+  if (!prerequisites?.length || !enrichedForms?.length) return [];
+
+  if (!prerequisites.length) {
+    return;
+  }
+
+  const parents = getParents(prerequisites, enrichedForms);
+
+  parents.forEach((parent) => {
+    ancestors?.add(parent);
+  });
+
+  getAncestors(
+    parents.flatMap((parent) =>
+      parent.prerequisites ? parent.prerequisites : ""
+    ),
+    enrichedForms,
+    ancestors
+  );
+};
+
 export const createSections = (
   data: EnrichedForm[],
   type: SectionVariant

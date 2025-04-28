@@ -2,11 +2,12 @@ import { useCallback, useMemo, useState } from "react";
 import Modal from "../../molecules/Modal";
 import ChartForm from "../../molecules/Form";
 import { useForms } from "../../../store/hooks/useForms";
-import { Prefill } from "../../../types/form";
+import { EnrichedForm, Prefill } from "../../../types/form";
 import { Section, SectionVariant } from "../../../types/modal";
 import {
   createSections,
   EnrichedFormsUpdateProps,
+  getAncestors,
   getParents,
   getUpdatedEnrichedForms,
 } from "../../../utils";
@@ -59,9 +60,22 @@ const FormOverview = () => {
   const handleOpenModal = (propertyName: string) => {
     setSelectedPropertyName(propertyName);
     const parents = getParents(selectedForm?.prerequisites, enrichedForms);
-    const newSections = [...createSections(parents, SectionVariant.Parent)];
+    const ancestors = new Set<EnrichedForm>();
+    getAncestors(
+      parents.flatMap((parent) =>
+        parent.prerequisites ? parent.prerequisites : ""
+      ),
+      enrichedForms,
+      ancestors
+    );
+    const newParentSections = [
+      ...createSections(parents, SectionVariant.Parent),
+    ];
+    const newAncestorSections = [
+      ...createSections(Array.from(ancestors), SectionVariant.Ancestor),
+    ];
 
-    setSections(newSections);
+    setSections([...newParentSections, ...newAncestorSections]);
     setIsOpen(true);
   };
 

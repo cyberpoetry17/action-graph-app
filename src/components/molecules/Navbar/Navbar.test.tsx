@@ -4,7 +4,7 @@ import Navbar from "./index";
 
 jest.mock("../../atoms/HomeIcon", () => () => <div>HomeIcon</div>);
 
-test("renders Navbar and HomeIcon inside NavLink", () => {
+test("renders Navbar with HomeIcon", () => {
   render(
     <MemoryRouter>
       <Navbar />
