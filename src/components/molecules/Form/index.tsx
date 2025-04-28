@@ -2,7 +2,6 @@ import "./form.css";
 import Label from "../../atoms/Label";
 import Input from "../Input";
 import { EnrichedForm } from "../../../types/form";
-import { FORM_NAME } from "../../../constants";
 
 type FormProps = {
   form: EnrichedForm;
@@ -27,9 +26,7 @@ const ChartForm = ({
 
   return (
     <div className="chart-form-fields" data-testid="form">
-      <Label dataTestId="form-label">
-        {FORM_NAME} {nodeName}
-      </Label>
+      <Label dataTestId="form-label">{nodeName}</Label>
       {formProperties &&
         formProperties.map((property, index) => (
           <Input

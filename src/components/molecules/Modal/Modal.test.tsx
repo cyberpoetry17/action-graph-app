@@ -1,7 +1,12 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Modal from "./index";
 import { SectionVariant } from "../../../types/modal";
+
+jest.mock("../../atoms/PortalWrapper", () => ({
+  __esModule: true,
+  default: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+}));
 
 const defaultSections = [
   {
@@ -19,16 +24,61 @@ const defaultSections = [
 ];
 
 test("modal not rendered (modal closed)", () => {
-  render(<Modal sections={defaultSections} />);
-  //   const modal = screen.que
-  //   expect(modal).toBeNull();
+  render(<Modal isOpen={false} />);
+  expect(screen.queryByTestId("modal")).not.toBeInTheDocument();
 });
 
-// test("renders menu label", () => {
-//   render(<Menu title="test title" sections={defaultSection} />);
-//   const menu = screen.getByTestId("menu");
-//   expect(menu).toBeInTheDocument();
+test("renders modal when isOpen is true", () => {
+  render(<Modal isOpen={true} sections={defaultSections} />);
+  expect(screen.getByTestId("modal")).toBeInTheDocument();
+  expect(screen.getByTestId("modal-header-label")).toBeInTheDocument();
+});
 
-//   const label = screen.getByTestId("menu-label");
-//   expect(label).toBeInTheDocument();
-// });
+test("calls handleClose method when clicking cancel button", () => {
+  const handleClose = jest.fn();
+
+  render(
+    <Modal isOpen={true} sections={defaultSections} handleClose={handleClose} />
+  );
+  expect(screen.getByTestId("modal")).toBeInTheDocument();
+
+  const button = screen.getByTestId("modal-button-cancel");
+  expect(button).toBeInTheDocument();
+
+  fireEvent.click(screen.getByTestId("modal-button-cancel"));
+  expect(handleClose).toHaveBeenCalledTimes(1);
+});
+
+test("calls handlePrefill method when clicking select button", () => {
+  const handlePrefill = jest.fn();
+  render(
+    <Modal isOpen sections={defaultSections} handlePrefill={handlePrefill} />
+  );
+
+  const section = screen.getByText("section1");
+  fireEvent.click(section);
+
+  const lists = screen.getAllByRole("list");
+  expect(lists[0]).toBeInTheDocument();
+
+  const listItems = within(lists[0]).getAllByRole("listitem");
+  fireEvent.click(listItems[0]);
+
+  const selectButton = screen.getByTestId("modal-button-select");
+  fireEvent.click(selectButton);
+
+  expect(handlePrefill).toHaveBeenCalledTimes(1);
+  expect(handlePrefill).toHaveBeenCalledWith(
+    expect.objectContaining({
+      prefillValue: "test1",
+    })
+  );
+});
+
+test("modal closes on Escape key press", () => {
+  const handleClose = jest.fn();
+  render(<Modal isOpen sections={defaultSections} handleClose={handleClose} />);
+
+  fireEvent.keyDown(document, { key: "Escape", code: "Escape" });
+  expect(handleClose).toHaveBeenCalledTimes(1);
+});

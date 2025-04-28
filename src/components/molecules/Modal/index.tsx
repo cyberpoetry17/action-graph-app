@@ -61,6 +61,7 @@ const Modal = ({
             {sections && (
               <Menu
                 sections={sections}
+                selectedPrefill={selectedPrefill}
                 title={MODAL_MENU_TITLE}
                 handleSelectedPrefill={handleSelectedPrefill}
               />
