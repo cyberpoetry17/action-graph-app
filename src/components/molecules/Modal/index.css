@@ -1,0 +1,30 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  height: 500px;
+  width: 500px;
+  background-color: white;
+  /* padding: 20px; */
+  display: flex;
+  flex-direction: column;
+  border-radius: 2px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: end;
+  overflow: visible;
+}

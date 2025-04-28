@@ -6,7 +6,7 @@ import { FORM_NAME } from "../../../constants";
 
 type FormProps = {
   form: MappedNodeForm;
-  handleClick?: () => void;
+  handleClick?: (name: string) => void;
   handleClearPrefillValue?: (name: string) => void;
 };
 
@@ -16,8 +16,14 @@ const ChartForm = ({
   handleClearPrefillValue,
 }: FormProps) => {
   const { nodeName, formProperties } = form;
-  const handleOnFormClick = (prefillValue?: string) =>
-    !prefillValue && handleClick?.();
+  const handleOnFormClick = (name: string, prefillValue?: string) =>
+    !prefillValue && handleClick?.(name);
+
+  const getValue = (
+    name: string,
+    prefillSourceName: string,
+    prefillValue: string
+  ) => `${name}: ${prefillSourceName}.${prefillValue}`;
 
   return (
     <div className="chart-form-fields">
@@ -30,8 +36,18 @@ const ChartForm = ({
             id={property.name}
             placeholder={property.name}
             key={index}
-            value={property.prefillValue}
-            onClick={() => handleOnFormClick(property.prefillValue)}
+            value={
+              property.prefill.prefillValue
+                ? getValue(
+                    property.name,
+                    property.prefill.prefillSourceName!,
+                    property.prefill.prefillValue!
+                  )
+                : ""
+            }
+            onClick={() =>
+              handleOnFormClick(property.name, property.prefill.prefillValue)
+            }
             onClearValue={() => handleClearPrefillValue?.(property.name)}
             readOnly
           />
