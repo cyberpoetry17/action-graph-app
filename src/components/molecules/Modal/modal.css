@@ -17,14 +17,22 @@
   height: 500px;
   width: 500px;
   background-color: white;
-  /* padding: 20px; */
   display: flex;
   flex-direction: column;
-  border-radius: 2px;
+  border-radius: 4px;
+}
+
+.modal-header {
+  padding: 10px;
+}
+.modal-body {
+  flex-grow: 1;
+  overflow: auto;
 }
 
 .modal-footer {
   display: flex;
   justify-content: end;
-  overflow: visible;
+  padding: 10px;
+  gap: 4px;
 }

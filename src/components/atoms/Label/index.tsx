@@ -1,10 +1,16 @@
-import "./index.css";
+import "./label.css";
 
 type LabelProps = {
   children: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
 };
 
-const Label = ({ children }: LabelProps) => {
-  return <label className="label">{children}</label>;
+const Label = ({ children, style, className = "" }: LabelProps) => {
+  return (
+    <label className={`default-label ${className}`} style={style}>
+      {children}
+    </label>
+  );
 };
 export default Label;

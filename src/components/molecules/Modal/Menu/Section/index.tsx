@@ -1,9 +1,9 @@
-import "./index.css";
-import { MappingSection } from "../../../../../types/modal";
+import "./section.css";
+import { Section as SectionType } from "../../../../../types/modal";
 import { Prefill } from "../../../../../types/form";
 
 type SectionProps = {
-  section: MappingSection;
+  section: SectionType;
   isExpanded?: boolean;
   handleExpanding: (id: string) => void;
   handleSelectedPrefill?: (prefill: Prefill) => void;

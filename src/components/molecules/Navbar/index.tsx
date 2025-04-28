@@ -1,4 +1,4 @@
-import "./index.css";
+import "./navbar.css";
 import { NavLink } from "react-router";
 import HomeIcon from "../../atoms/HomeIcon";
 

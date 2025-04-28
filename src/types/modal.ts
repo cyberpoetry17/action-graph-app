@@ -1,10 +1,4 @@
-// export type MappingSectionVariant =
-//   | "parent"
-//   | "transient-ancestor"
-//   | "global"
-//   | "other";
-
-export enum MappingSectionVariant {
+export enum SectionVariant {
   Parent = "parent",
   Ancestor = "transient-ancestor",
   Global = "global",
@@ -13,7 +7,7 @@ export enum MappingSectionVariant {
 
 export type MappingSection = {
   id: string;
-  type: MappingSectionVariant;
+  type: SectionVariant;
   name: string;
   values: string[];
 };

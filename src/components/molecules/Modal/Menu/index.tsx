@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import "./index.css";
-import { MappingSection } from "../../../../types/modal";
+import "./menu.css";
 import Section from "./Section";
+import { Section as SectionType } from "../../../../types/modal";
 import { Prefill } from "../../../../types/form";
+import Label from "../../../atoms/Label";
 
 type MenuProps = {
   title: string;
-  sections: MappingSection[];
+  sections: SectionType[];
   handleSelectedPrefill?: (prefill: Prefill) => void;
 };
 
@@ -28,12 +29,11 @@ const Menu = ({ title, sections, handleSelectedPrefill }: MenuProps) => {
       ...previous,
       [id]: !previous[id],
     }));
-  console.log(title, "title");
 
   return (
     <div className="menu-container">
-      {/* <Label>{title}</Label>
-      <div>Search</div> */}
+      <Label>{title}</Label>
+      <div>Search</div>
       {sections.map((section) => (
         <Section
           section={section}

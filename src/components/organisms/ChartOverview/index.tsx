@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from "react";
-import { MAX_ZOOM, MIN_ZOOM } from "../../../constants";
 import Chart from "../../molecules/Chart";
 import { useForms } from "../../../store/hooks/useForms";
 import { Node, Edge } from "../../../types/graph";
+import { MAX_ZOOM, MIN_ZOOM } from "../../../constants";
 
 type ChartOverviewProps = {
   nodes?: Node[];

@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
-import { BASE_API, BLUEPRINT_ID, TENANT_ID } from "../../constants";
-import { ActionGraph } from "../../types/graph";
-import { MappedNodeForm } from "../../types/form";
-import { useForms } from "../../store/hooks/useForms";
 import FormOverview from "../organisms/FormOverview";
 import ChartOverview from "../organisms/ChartOverview";
+import { EnrichedForm } from "../../types/form";
+import { useForms } from "../../store/hooks/useForms";
+import { ActionGraph } from "../../types/graph";
+import { BASE_API, BLUEPRINT_ID, TENANT_ID } from "../../constants";
 
-const GraphOverview = () => {
+const GraphPage = () => {
   const [actionGraph, setActionGraph] = useState<ActionGraph>();
   const { setEnrichedForms } = useForms();
 
@@ -26,7 +26,7 @@ const GraphOverview = () => {
     fetchGraph();
   }, []);
 
-  const mappedData: MappedNodeForm[] | undefined = useMemo(() => {
+  const mappedForms: EnrichedForm[] | undefined = useMemo(() => {
     const nodes = actionGraph?.nodes;
     const forms = actionGraph?.forms;
 
@@ -51,8 +51,8 @@ const GraphOverview = () => {
   }, [actionGraph?.forms, actionGraph?.nodes]);
 
   useEffect(() => {
-    setEnrichedForms(mappedData);
-  }, [mappedData, setEnrichedForms]);
+    setEnrichedForms(mappedForms);
+  }, [mappedForms, setEnrichedForms]);
 
   return (
     <>
@@ -62,4 +62,4 @@ const GraphOverview = () => {
   );
 };
 
-export default GraphOverview;
+export default GraphPage;
