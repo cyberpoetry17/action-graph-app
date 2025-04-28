@@ -8,10 +8,16 @@ import Label from "../../../atoms/Label";
 type MenuProps = {
   title: string;
   sections: SectionType[];
+  selectedPrefill?: Prefill;
   handleSelectedPrefill?: (prefill: Prefill) => void;
 };
 
-const Menu = ({ title, sections, handleSelectedPrefill }: MenuProps) => {
+const Menu = ({
+  title,
+  sections,
+  selectedPrefill,
+  handleSelectedPrefill,
+}: MenuProps) => {
   const [expandedSections, setExpandedSections] = useState<
     Record<string, boolean>
   >({});
@@ -33,13 +39,15 @@ const Menu = ({ title, sections, handleSelectedPrefill }: MenuProps) => {
   return (
     <div className="menu-container" data-testid="menu">
       <Label dataTestId="menu-label">{title}</Label>
-      <div>Search</div>
-      {sections.map((section) => (
+      {sections.map((section, index) => (
         <Section
           section={section}
+          selectedPrefill={selectedPrefill}
           isExpanded={expandedSections[section.id]}
           handleExpanding={expandCollapseSection}
           handleSelectedPrefill={handleSelectedPrefill}
+          customKey={index}
+          key={index}
         />
       ))}
     </div>

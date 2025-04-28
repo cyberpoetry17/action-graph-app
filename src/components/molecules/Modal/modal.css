@@ -26,8 +26,11 @@
   padding: 10px;
 }
 .modal-body {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
-  overflow: auto;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .modal-footer {

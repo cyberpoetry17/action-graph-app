@@ -11,6 +11,10 @@ import {
   getParents,
   getUpdatedEnrichedForms,
 } from "../../../utils";
+import {
+  ActionProperties,
+  ClientOrganisationProperties,
+} from "../../../constants";
 
 const FormOverview = () => {
   const { enrichedForms, setEnrichedForms, selectedFormId } = useForms();
@@ -59,6 +63,8 @@ const FormOverview = () => {
 
   const handleOpenModal = (propertyName: string) => {
     setSelectedPropertyName(propertyName);
+
+    //traversing graphs
     const parents = getParents(selectedForm?.prerequisites, enrichedForms);
     const ancestors = new Set<EnrichedForm>();
     getAncestors(
@@ -68,6 +74,8 @@ const FormOverview = () => {
       enrichedForms,
       ancestors
     );
+
+    //creating menu sections
     const newParentSections = [
       ...createSections(parents, SectionVariant.Parent),
     ];
@@ -75,7 +83,12 @@ const FormOverview = () => {
       ...createSections(Array.from(ancestors), SectionVariant.Ancestor),
     ];
 
-    setSections([...newParentSections, ...newAncestorSections]);
+    setSections([
+      ActionProperties,
+      ClientOrganisationProperties,
+      ...newParentSections,
+      ...newAncestorSections,
+    ]);
     setIsOpen(true);
   };
 

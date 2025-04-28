@@ -13,7 +13,11 @@ const defaultSection = {
 test("renders section without list", () => {
   const handleExpanding = jest.fn();
   render(
-    <Section section={defaultSection} handleExpanding={handleExpanding} />
+    <Section
+      section={defaultSection}
+      handleExpanding={handleExpanding}
+      customKey={"1"}
+    />
   );
   const list = screen.queryByRole("list");
   expect(list).toBeNull();
@@ -23,6 +27,7 @@ test("renders section with list", () => {
   const handleExpanding = jest.fn();
   render(
     <Section
+      customKey={"1"}
       section={defaultSection}
       handleExpanding={handleExpanding}
       isExpanded={true}
@@ -35,7 +40,11 @@ test("renders section with list", () => {
 test("expands list on button click", () => {
   const handleExpanding = jest.fn();
   render(
-    <Section section={defaultSection} handleExpanding={handleExpanding} />
+    <Section
+      customKey={"1"}
+      section={defaultSection}
+      handleExpanding={handleExpanding}
+    />
   );
 
   const button = screen.getByTestId("section-button");

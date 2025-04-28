@@ -3,21 +3,25 @@ import { Section as SectionType } from "../../../../../types/modal";
 import { Prefill } from "../../../../../types/form";
 
 type SectionProps = {
+  customKey: string | number;
   section: SectionType;
   isExpanded?: boolean;
+  selectedPrefill?: Prefill;
   handleExpanding: (id: string) => void;
   handleSelectedPrefill?: (prefill: Prefill) => void;
 };
 
 const Section = ({
   section,
+  customKey,
   handleExpanding,
   handleSelectedPrefill,
+  selectedPrefill,
   isExpanded = false,
 }: SectionProps) => {
   const { id, name, values } = section;
   return (
-    <div>
+    <div className="modal-menu-section-container" key={customKey}>
       <button
         onClick={() => handleExpanding(id)}
         className="modal-menu-section-button"
@@ -29,7 +33,7 @@ const Section = ({
         <ul key={id} className="modal-menu-section" data-testid="section-list">
           {values.map((value, index) => (
             <li
-              key={index}
+              key={index + value}
               onClick={() =>
                 handleSelectedPrefill?.({
                   prefillValue: value,
@@ -37,7 +41,12 @@ const Section = ({
                   prefillSourceId: section.id,
                 })
               }
-              className="modal-menu-section-element"
+              className={`modal-menu-section-element ${
+                selectedPrefill?.prefillSourceId === section.id &&
+                selectedPrefill.prefillValue === value
+                  ? "section-highlight"
+                  : ""
+              }`}
             >
               {value}
             </li>

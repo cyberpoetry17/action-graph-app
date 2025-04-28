@@ -1,16 +1,26 @@
+.modal-menu-section-container {
+  height: auto;
+}
+
 .modal-menu-section {
   list-style-type: none;
   padding-left: 8px;
+  cursor: pointer;
 }
 
 .modal-menu-section-button {
   text-align: left;
   padding: 4px;
   border: 0;
+  width: 100%;
   background-color: #f6f6f6;
+  cursor: pointer;
 }
 
 .modal-menu-section-button:hover,
 .modal-menu-section-element:hover {
+  background-color: #dce6f0;
+}
+.section-highlight {
   background-color: #dce6f0;
 }
