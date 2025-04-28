@@ -5,6 +5,8 @@ Action-graph structure:
 - Molecules
 - Organisms
 - Pages
+- store
+- types
 ## How to Install and Run the App
 
 Follow these steps to get your development environment up and running:
