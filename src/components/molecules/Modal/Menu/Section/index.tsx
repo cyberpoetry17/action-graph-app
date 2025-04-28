@@ -17,15 +17,16 @@ const Section = ({
 }: SectionProps) => {
   const { id, name, values } = section;
   return (
-    <>
+    <div>
       <button
         onClick={() => handleExpanding(id)}
         className="modal-menu-section-button"
+        data-testid="section-button"
       >
         {name}
       </button>
       {isExpanded && (
-        <ul key={id} className="modal-menu-section">
+        <ul key={id} className="modal-menu-section" data-testid="section-list">
           {values.map((value, index) => (
             <li
               key={index}
@@ -43,7 +44,7 @@ const Section = ({
           ))}
         </ul>
       )}
-    </>
+    </div>
   );
 };
 

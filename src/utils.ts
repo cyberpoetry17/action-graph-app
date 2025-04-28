@@ -1,5 +1,5 @@
 import { EnrichedForm, Prefill } from "./types/form";
-import { MappingSection, SectionVariant } from "./types/modal";
+import { Section, SectionVariant } from "./types/modal";
 
 export type EnrichedFormsUpdateProps = {
   id: string;
@@ -57,7 +57,7 @@ export const getParents = (
 export const createSections = (
   data: EnrichedForm[],
   type: SectionVariant
-): MappingSection[] =>
+): Section[] =>
   data.map((item) => ({
     id: item.nodeId,
     type,

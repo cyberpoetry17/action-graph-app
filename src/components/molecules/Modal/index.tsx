@@ -6,6 +6,12 @@ import Label from "../../atoms/Label";
 import Button, { ButtonVariant } from "../../atoms/Button";
 import { Section } from "../../../types/modal";
 import { Prefill } from "../../../types/form";
+import {
+  MDOAL_BUTTON_CANCEL,
+  MODAL_BUTTON_SELECT,
+  MODAL_HEADER,
+  MODAL_MENU_TITLE,
+} from "../../../constants";
 
 type ModalProps = {
   isOpen?: boolean;
@@ -13,10 +19,6 @@ type ModalProps = {
   handleClose?: () => void;
   handlePrefill?: (prefill?: Prefill) => void;
 };
-const MODAL_MENU_TITLE = "Available data";
-const MDOAL_BUTTON_CANCEL = "Cancel";
-const MODAL_BUTTON_SELECT = "Select";
-const MODAL_HEADER = "Select data element to map";
 
 const Modal = ({
   handleClose,
@@ -45,10 +47,13 @@ const Modal = ({
 
   return isOpen ? (
     <PortalWrapper>
-      <div className="modal-overlay">
+      <div className="modal-overlay" data-testid="modal">
         <div className="modal-container">
           <div className="modal-header">
-            <Label style={{ fontSize: "16px", fontWeight: 700 }}>
+            <Label
+              style={{ fontSize: "16px", fontWeight: 700 }}
+              dataTestId="modal-header-label"
+            >
               {MODAL_HEADER}
             </Label>
           </div>
@@ -63,11 +68,13 @@ const Modal = ({
           </div>
           <div className="modal-footer">
             <Button
+              dataTestId="modal-button-cancel"
               onClick={handleCloseAndClearValue}
               text={MDOAL_BUTTON_CANCEL}
               variant={ButtonVariant.Secondary}
             />
             <Button
+              dataTestId="modal-button-select"
               onClick={() => handlePrefill?.(selectedPrefill)}
               text={MODAL_BUTTON_SELECT}
               disabled={!selectedPrefill?.prefillValue}

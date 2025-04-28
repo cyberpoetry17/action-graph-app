@@ -12,3 +12,9 @@ export const BACKGROUND_SIZE_DEFAULT = 1;
 
 //forms
 export const FORM_NAME = "Form name:";
+
+//modal
+export const MODAL_MENU_TITLE = "Available data";
+export const MDOAL_BUTTON_CANCEL = "Cancel";
+export const MODAL_BUTTON_SELECT = "Select";
+export const MODAL_HEADER = "Select data element to map";

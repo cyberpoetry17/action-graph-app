@@ -28,25 +28,30 @@ const Chart = ({
     handleNodeClick(node.id);
 
   return (
-    <ReactFlow
-      nodes={nodes}
-      edges={edges}
-      maxZoom={maxZoom}
-      minZoom={minZoom}
-      fitView={fitView}
-      onNodeClick={onNodeClick}
+    <div
+      data-testid="chart-container"
+      style={{ width: "100%", height: "100%" }}
     >
-      {children}
-      {background && (
-        <Background
-          variant={background.variant}
-          color={background.color}
-          gap={background.gap}
-          id={background.id}
-          size={background.size}
-        />
-      )}
-    </ReactFlow>
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        maxZoom={maxZoom}
+        minZoom={minZoom}
+        fitView={fitView}
+        onNodeClick={onNodeClick}
+      >
+        {children}
+        {background && (
+          <Background
+            variant={background.variant}
+            color={background.color}
+            gap={background.gap}
+            id={background.id}
+            size={background.size}
+          />
+        )}
+      </ReactFlow>
+    </div>
   );
 };
 
