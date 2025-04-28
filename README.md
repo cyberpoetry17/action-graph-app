@@ -1,54 +1,50 @@
-# React + TypeScript + Vite
+# ACTION-GRAPH APP
+This app was made using React, TypeScript, Vite, basic HTML/CSS, Jest and Testing Library.
+Action-graph structure:
+- Atoms
+- Molecules
+- Organisms
+- Pages
+## How to Install and Run the App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Follow these steps to get your development environment up and running:
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### 1. Clone the repository
+```bash
+git clone https://github.com/cyberpoetry17/action-graph-app.git
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### 2. Install
+```bash
+npm install
 ```
+### 3. Run
+```bash
+npm run dev
+```
+### 4. Run
+```bash
+npm run test
+```
+### 2. Clone and start server from this repo: https://github.com/mosaic-avantos/frontendchallengeserver
+
+## Extending data sources:
+Main feature (selecting prefill values) can be extended by creating new types: 
+1. Go to types/modal and add new type in SectionVariant. Some of the premade types are: Parent, Ancestor, Global, Other.
+2. Add your new object (don't forget to set type property e.g., type:SectionVariant.Parent) to the section array and pass it down to the Modal component.
+
+Please, pay attention to utils.ts file and its methods: getParent, getAncestor, createSection etc.
+
+### "Extending" components:
+   Add new fields in props types e.g :
+   ```bash
+   type ButtonProps = {..., myNewProps: string}
+   ```
+### Adding new page:
+1. Create new page in src/pages folder
+2. Add new page to Routes in App.tsx 
+
+    
+
+
+
