@@ -6,7 +6,7 @@ export type Prefill = {
 
 export type FormProperty = {
   name: string;
-  prefill: Prefill;
+  prefill?: Prefill;
 };
 
 export type MappedForm = {

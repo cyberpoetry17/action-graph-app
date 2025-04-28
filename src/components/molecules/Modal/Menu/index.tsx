@@ -31,8 +31,8 @@ const Menu = ({ title, sections, handleSelectedPrefill }: MenuProps) => {
     }));
 
   return (
-    <div className="menu-container">
-      <Label>{title}</Label>
+    <div className="menu-container" data-testid="menu">
+      <Label dataTestId="menu-label">{title}</Label>
       <div>Search</div>
       {sections.map((section) => (
         <Section

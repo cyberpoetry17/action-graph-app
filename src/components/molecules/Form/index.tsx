@@ -26,18 +26,20 @@ const ChartForm = ({
   ) => `${name}: ${prefillSourceName}.${prefillValue}`;
 
   return (
-    <div className="chart-form-fields">
-      <Label>
+    <div className="chart-form-fields" data-testid="form">
+      <Label dataTestId="form-label">
         {FORM_NAME} {nodeName}
       </Label>
       {formProperties &&
         formProperties.map((property, index) => (
           <Input
             id={property.name}
+            dataTestId={`input-${property.name}`}
+            name={property.name}
             placeholder={property.name}
             key={index}
             value={
-              property.prefill.prefillValue
+              property.prefill?.prefillValue
                 ? getValue(
                     property.name,
                     property.prefill.prefillSourceName!,
@@ -46,7 +48,7 @@ const ChartForm = ({
                 : ""
             }
             onClick={() =>
-              handleOnFormClick(property.name, property.prefill.prefillValue)
+              handleOnFormClick(property.name, property.prefill?.prefillValue)
             }
             onClearValue={() => handleClearPrefillValue?.(property.name)}
             readOnly

@@ -5,7 +5,7 @@ export enum SectionVariant {
   Other = "other",
 }
 
-export type MappingSection = {
+export type Section = {
   id: string;
   type: SectionVariant;
   name: string;

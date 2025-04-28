@@ -1,29 +1,33 @@
 import "./input.css";
 
 type InputProps = {
-  id: string;
-  key: React.Key;
+  id?: string;
   value?: string;
   placeholder?: string;
   readOnly?: boolean;
+  name?: string;
+  dataTestId?: string;
   onClick?: () => void;
-  onClearValue?: (id: string) => void;
+  onClearValue?: (id?: string) => void;
 };
 
 const Input = ({
   id,
-  key,
   value,
   placeholder,
   readOnly,
+  name,
+  dataTestId,
   onClick,
   onClearValue,
 }: InputProps) => {
   return (
     <div className="input-container">
       <input
-        className="input"
-        key={key}
+        data-testid={dataTestId}
+        className="default-input"
+        name={name}
+        key={id}
         value={value}
         placeholder={placeholder}
         onClick={onClick}
@@ -31,6 +35,7 @@ const Input = ({
       />
       {value && (
         <button
+          data-testid="input-button"
           onClick={() => onClearValue?.(id)}
           className="input-clear-button"
         >
