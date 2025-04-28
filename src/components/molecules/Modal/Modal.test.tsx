@@ -38,7 +38,7 @@ test("calls handleClose method when clicking cancel button", () => {
   const handleClose = jest.fn();
 
   render(
-    <Modal isOpen={true} sections={defaultSections} handleClose={handleClose} />
+    <Modal isOpen={true} sections={defaultSections} onClose={handleClose} />
   );
   expect(screen.getByTestId("modal")).toBeInTheDocument();
 
@@ -52,7 +52,7 @@ test("calls handleClose method when clicking cancel button", () => {
 test("calls handlePrefill method when clicking select button", () => {
   const handlePrefill = jest.fn();
   render(
-    <Modal isOpen sections={defaultSections} handlePrefill={handlePrefill} />
+    <Modal isOpen sections={defaultSections} onSelectPrefill={handlePrefill} />
   );
 
   const section = screen.getByText("section1");
@@ -77,7 +77,7 @@ test("calls handlePrefill method when clicking select button", () => {
 
 test("modal closes on Escape key press", () => {
   const handleClose = jest.fn();
-  render(<Modal isOpen sections={defaultSections} handleClose={handleClose} />);
+  render(<Modal isOpen sections={defaultSections} onClose={handleClose} />);
 
   fireEvent.keyDown(document, { key: "Escape", code: "Escape" });
   expect(handleClose).toHaveBeenCalledTimes(1);

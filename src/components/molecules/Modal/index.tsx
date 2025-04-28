@@ -16,34 +16,40 @@ import {
 type ModalProps = {
   isOpen?: boolean;
   sections?: Section[];
-  handleClose?: () => void;
-  handlePrefill?: (prefill?: Prefill) => void;
+  onClose?: () => void;
+  onSelectPrefill?: (prefill?: Prefill) => void;
 };
 
 const Modal = ({
-  handleClose,
-  handlePrefill,
+  onClose,
+  onSelectPrefill,
   sections,
   isOpen = false,
 }: ModalProps) => {
   const [selectedPrefill, setSelectedPrefill] = useState<Prefill>();
 
-  const handleCloseAndClearValue = useCallback(() => {
-    setSelectedPrefill(undefined);
-    handleClose?.();
-  }, [handleClose]);
+  const clearValue = () => setSelectedPrefill(undefined);
+
+  const handleClose = useCallback(() => {
+    clearValue();
+    onClose?.();
+  }, [onClose]);
+
+  const handleSelectButton = () => {
+    onSelectPrefill?.(selectedPrefill);
+    handleClose();
+  };
+
+  const handleSelectPrefill = (prefill: Prefill) => setSelectedPrefill(prefill);
 
   useEffect(() => {
     const handleEscapeKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") handleCloseAndClearValue?.();
+      if (e.key === "Escape") handleClose?.();
     };
     document.addEventListener("keydown", handleEscapeKey);
 
     return () => document.removeEventListener("keydown", handleEscapeKey);
-  }, [handleCloseAndClearValue]);
-
-  const handleSelectedPrefill = (prefill: Prefill) =>
-    setSelectedPrefill(prefill);
+  }, [handleClose]);
 
   return isOpen ? (
     <PortalWrapper>
@@ -63,20 +69,20 @@ const Modal = ({
                 sections={sections}
                 selectedPrefill={selectedPrefill}
                 title={MODAL_MENU_TITLE}
-                handleSelectedPrefill={handleSelectedPrefill}
+                handleSelectedPrefill={handleSelectPrefill}
               />
             )}
           </div>
           <div className="modal-footer">
             <Button
               dataTestId="modal-button-cancel"
-              onClick={handleCloseAndClearValue}
+              onClick={handleClose}
               text={MDOAL_BUTTON_CANCEL}
               variant={ButtonVariant.Secondary}
             />
             <Button
               dataTestId="modal-button-select"
-              onClick={() => handlePrefill?.(selectedPrefill)}
+              onClick={handleSelectButton}
               text={MODAL_BUTTON_SELECT}
               disabled={!selectedPrefill?.prefillValue}
               variant={ButtonVariant.Primary}
