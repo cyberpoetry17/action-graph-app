@@ -35,6 +35,10 @@ Main feature (selecting prefill values) can be extended by creating new types:
 1. Go to types/modal and add new type in SectionVariant. Some of the premade types are: Parent, Ancestor, Global, Other.
 2. Add your new object (don't forget to set type property e.g., type:SectionVariant.Parent) to the section array and pass it down to the Modal component.
 
+   ```bash
+   export enum SectionVariant { Parent = "parent", Ancestor = "transient-ancestor", Global = "global", Other = "other"}
+   ```
+
 Please, pay attention to utils.ts file and its methods: getParent, getAncestor, createSection etc.
 
 ### "Extending" components:
