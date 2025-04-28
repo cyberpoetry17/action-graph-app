@@ -1,7 +1,7 @@
 import { ReactFlow } from "@xyflow/react";
+import Background, { BackgroundProps } from "./Background";
 import type { Node, Edge, NodeMouseHandler } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import Background, { BackgroundProps } from "./Background";
 
 type ChartProps = {
   nodes: Node[];

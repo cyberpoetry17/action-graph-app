@@ -15,7 +15,7 @@ export type MappedForm = {
   properties: FormProperty[];
 };
 
-export type MappedNodeForm = {
+export type EnrichedForm = {
   nodeId: string;
   nodeName: string;
   prerequisites?: string[];

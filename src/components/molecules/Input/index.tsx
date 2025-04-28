@@ -1,4 +1,4 @@
-import "./index.css";
+import "./input.css";
 
 type InputProps = {
   id: string;

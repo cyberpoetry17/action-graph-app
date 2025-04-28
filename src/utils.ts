@@ -1,11 +1,11 @@
-import { MappedNodeForm, Prefill } from "./types/form";
-import { MappingSection, MappingSectionVariant } from "./types/modal";
+import { EnrichedForm, Prefill } from "./types/form";
+import { MappingSection, SectionVariant } from "./types/modal";
 
 export type EnrichedFormsUpdateProps = {
   id: string;
   name: string;
   sourceName?: string;
-  enrichedForms: MappedNodeForm[] | undefined;
+  enrichedForms: EnrichedForm[] | undefined;
   prefill?: Prefill;
 };
 
@@ -14,7 +14,7 @@ export const getUpdatedEnrichedForms = ({
   name,
   enrichedForms,
   prefill,
-}: EnrichedFormsUpdateProps): MappedNodeForm[] | undefined => {
+}: EnrichedFormsUpdateProps): EnrichedForm[] | undefined => {
   const form = enrichedForms?.find((form) => form.nodeId === id);
   if (!form) return enrichedForms;
 
@@ -43,20 +43,20 @@ export const getUpdatedEnrichedForms = ({
 
 export const getParents = (
   prerequisites?: string[],
-  enrichedForms?: MappedNodeForm[]
-): MappedNodeForm[] => {
+  enrichedForms?: EnrichedForm[]
+): EnrichedForm[] => {
   if (!prerequisites?.length || !enrichedForms?.length) return [];
 
   return prerequisites
     .map((prerequisite) =>
       enrichedForms.find((form) => form.nodeId === prerequisite)
     )
-    .filter((parent): parent is MappedNodeForm => Boolean(parent));
+    .filter((parent): parent is EnrichedForm => Boolean(parent));
 };
 
 export const createSections = (
-  data: MappedNodeForm[],
-  type: MappingSectionVariant
+  data: EnrichedForm[],
+  type: SectionVariant
 ): MappingSection[] =>
   data.map((item) => ({
     id: item.nodeId,

@@ -1,11 +1,11 @@
-import "./index.css";
-import { MappedNodeForm } from "../../../types/form";
+import "./form.css";
 import Label from "../../atoms/Label";
 import Input from "../Input";
+import { EnrichedForm } from "../../../types/form";
 import { FORM_NAME } from "../../../constants";
 
 type FormProps = {
-  form: MappedNodeForm;
+  form: EnrichedForm;
   handleClick?: (name: string) => void;
   handleClearPrefillValue?: (name: string) => void;
 };

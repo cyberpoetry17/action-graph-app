@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Routes } from "react-router";
 import Navbar from "./components/molecules/Navbar";
-import GraphOverview from "./components/pages/GraphOverview";
+import GraphPage from "./components/pages/GraphPage";
 import { FormProvider } from "./store";
 
 const App = () => {
@@ -13,7 +13,7 @@ const App = () => {
         </div>
         <div className="grid-item-chart">
           <Routes>
-            <Route path="/" element={<GraphOverview />} />
+            <Route path="/" element={<GraphPage />} />
           </Routes>
         </div>
       </FormProvider>
