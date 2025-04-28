@@ -19,6 +19,12 @@ const ChartForm = ({
   const handleOnFormClick = (name: string, prefillValue?: string) =>
     !prefillValue && handleClick?.(name);
 
+  const getValue = (
+    name: string,
+    prefillSourceName: string,
+    prefillValue: string
+  ) => `${name}: ${prefillSourceName}.${prefillValue}`;
+
   return (
     <div className="chart-form-fields">
       <Label>
@@ -30,7 +36,15 @@ const ChartForm = ({
             id={property.name}
             placeholder={property.name}
             key={index}
-            value={property.prefill.prefillValue}
+            value={
+              property.prefill.prefillValue
+                ? getValue(
+                    property.name,
+                    property.prefill.prefillSourceName!,
+                    property.prefill.prefillValue!
+                  )
+                : ""
+            }
             onClick={() =>
               handleOnFormClick(property.name, property.prefill.prefillValue)
             }

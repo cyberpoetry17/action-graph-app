@@ -1,6 +1,6 @@
 import "./index.css";
 import PortalWrapper from "../../atoms/PortalWrapper";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { MappingSection } from "../../../types/modal";
 import Menu from "./Menu";
 import Label from "../../atoms/Label";
@@ -10,29 +10,34 @@ type ModalProps = {
   isOpen?: boolean;
   sections?: MappingSection[];
   handleClose?: () => void;
-  handlePrefill?: (name: string, prefill: Prefill) => void;
+  handlePrefill?: (prefill?: Prefill) => void;
 };
 const TITLE = "Available data";
 
-const Modal = ({ handleClose, sections, isOpen = false }: ModalProps) => {
+const Modal = ({
+  handleClose,
+  handlePrefill,
+  sections,
+  isOpen = false,
+}: ModalProps) => {
   const [selectedPrefill, setSelectedPrefill] = useState<Prefill>();
+
+  const handleCloseAndClearValue = useCallback(() => {
+    setSelectedPrefill(undefined);
+    handleClose?.();
+  }, [handleClose]);
 
   useEffect(() => {
     const handleEscapeKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") handleClose?.();
+      if (e.key === "Escape") handleCloseAndClearValue?.();
     };
     document.addEventListener("keydown", handleEscapeKey);
 
     return () => document.removeEventListener("keydown", handleEscapeKey);
-  }, [handleClose]);
+  }, [handleCloseAndClearValue]);
 
   const handleSelectedPrefill = (prefill: Prefill) =>
     setSelectedPrefill(prefill);
-
-  const handleSelectAction = () => {
-    //pozvati funkciju koja setuje
-    console.log(selectedPrefill, "prefill value");
-  };
 
   return isOpen ? (
     <PortalWrapper>
@@ -49,8 +54,11 @@ const Modal = ({ handleClose, sections, isOpen = false }: ModalProps) => {
             )}
           </div>
           <div className="modal-footer">
-            <button onClick={handleClose}>Cancel</button>
-            <button disabled={!selectedPrefill} onClick={handleSelectAction}>
+            <button onClick={handleCloseAndClearValue}>Cancel</button>
+            <button
+              disabled={!selectedPrefill}
+              onClick={() => handlePrefill?.(selectedPrefill)}
+            >
               Select
             </button>
           </div>
