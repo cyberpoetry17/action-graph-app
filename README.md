@@ -24,7 +24,7 @@ npm install
 ```bash
 npm run dev
 ```
-### 4. Run
+### 4. Test
 ```bash
 npm run test
 ```
